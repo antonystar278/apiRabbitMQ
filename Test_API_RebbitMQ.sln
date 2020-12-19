@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_API_RebbitMQ", "Test_API_RebbitMQ\Test_API_RebbitMQ.csproj", "{9C0C59A4-8D76-47ED-A1B4-49368A8D4ED2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_API_RebbitMQ", "Test_API_RebbitMQ\Test_API_RebbitMQ.csproj", "{9C0C59A4-8D76-47ED-A1B4-49368A8D4ED2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{D3078129-3D23-4D6E-B5A3-084076789FF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{79658618-C06D-4646-991E-4B12B5B84748}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{9C0C59A4-8D76-47ED-A1B4-49368A8D4ED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C0C59A4-8D76-47ED-A1B4-49368A8D4ED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C0C59A4-8D76-47ED-A1B4-49368A8D4ED2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3078129-3D23-4D6E-B5A3-084076789FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3078129-3D23-4D6E-B5A3-084076789FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3078129-3D23-4D6E-B5A3-084076789FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3078129-3D23-4D6E-B5A3-084076789FF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79658618-C06D-4646-991E-4B12B5B84748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79658618-C06D-4646-991E-4B12B5B84748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79658618-C06D-4646-991E-4B12B5B84748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79658618-C06D-4646-991E-4B12B5B84748}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
