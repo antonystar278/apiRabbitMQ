@@ -7,7 +7,6 @@ namespace Core.Entities
 {
     public class ApplicationUser : IdentityUser<Guid>, IBaseEntity
     {
-        public string Name { get; set; }
         public DateTime CreationDate { get; set; }
         public IList<Operation> Operations { get; set; } = new List<Operation>();
     }

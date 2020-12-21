@@ -1,4 +1,4 @@
-﻿namespace Core.Entities.Enums
+﻿namespace Core.Enums
 {
     public enum OperationStatus
     {
