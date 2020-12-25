@@ -9,6 +9,7 @@ namespace Core.Extensions.ConfigureServices
         public static IServiceCollection ConfigureCoreDependencies(this IServiceCollection services)
         {
             services.AddTransient<IOperationService, OperationService>();
+            services.AddTransient<IAccountService, AccountService>();
 
 
             return services;

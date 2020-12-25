@@ -5,7 +5,7 @@ namespace Core.Models.Operations
 {
     public class OperationSummaryResponse
     {
-        public IList<Operation> Operations { get; set; } = new List<Operation>();
+        public IList<OperationSummaryDTO> Operations { get; set; } = new List<OperationSummaryDTO>();
         public int TotalCount { get; set; }
     }
 }

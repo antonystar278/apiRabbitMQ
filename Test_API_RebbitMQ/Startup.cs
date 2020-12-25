@@ -1,4 +1,6 @@
 using Core.Extensions.ConfigureServices;
+using Core.Helpers;
+using Core.Models.Authentication;
 using Infrastructure.ConfigureServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +9,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Converters;
 
 namespace Test_API_RebbitMQ
 {
@@ -19,13 +22,17 @@ namespace Test_API_RebbitMQ
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
 
-            services.AddControllersWithViews();
-
-            // In production, the React files will be served from this directory
+            services.Configure<JwtConfigModel>(Configuration.GetSection("JwtConfig"));
             services.ConfigureInfrastructureDependencies(Configuration);
             services.ConfigureCoreDependencies();
             services.AddSpaStaticFiles(configuration =>
@@ -34,7 +41,6 @@ namespace Test_API_RebbitMQ
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -44,17 +50,16 @@ namespace Test_API_RebbitMQ
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            app.UseHttpsRedirection();
-            app.UseAuthentication();
-            app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
             app.UseRouting();
-            app.UseAuthorization();
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+            app.UseMiddleware<JwtMiddleware>();
+            app.UseHttpsRedirection();
 
             app.UseEndpoints(endpoints =>
             {

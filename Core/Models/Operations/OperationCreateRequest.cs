@@ -8,6 +8,6 @@ namespace Core.Models.Operations
         [Required]
         public string Name { get; set; }
         [Required]
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
     }
 }

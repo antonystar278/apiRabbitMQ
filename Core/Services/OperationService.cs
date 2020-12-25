@@ -13,6 +13,7 @@ namespace Core.Services
     public class OperationService : IOperationService
     {
         protected readonly IOperationRepository _operationRepository;
+
         public OperationService(IOperationRepository operationRepository)
         {
             _operationRepository = operationRepository;
@@ -24,10 +25,12 @@ namespace Core.Services
                 CreationDate = DateTime.Now,
                 Name = request.Name,
                 Status = OperationStatus.NotStarted,
-                UserId = request.UserId
+                ApplicationUserId = request.UserId
             };
 
             await _operationRepository.CreateAsync(entity);
+
+
 
             return entity;
         }

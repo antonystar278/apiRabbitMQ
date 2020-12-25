@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Core.Entities
 {
-    public class ApplicationUser : IdentityUser<Guid>, IBaseEntity
+    public class ApplicationUser : IdentityUser<int>, IBaseEntity
     {
         public DateTime CreationDate { get; set; }
         public IList<Operation> Operations { get; set; } = new List<Operation>();

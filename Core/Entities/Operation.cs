@@ -10,7 +10,8 @@ namespace Core.Entities
         public int OperationNumber { get; set; }     
         public OperationStatus Status { get; set; }
         public DateTime ExecutionTime { get; set; }
+        public int ApplicationUserId { get; set; }
         public ApplicationUser User { get; set; }
-        public Guid UserId { get; set; }
+        
     }
 }

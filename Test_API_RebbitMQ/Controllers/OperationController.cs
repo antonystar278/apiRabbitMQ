@@ -1,10 +1,8 @@
 ﻿using Core.Entities;
+using Core.Helpers;
 using Core.Interfaces.Core.Services;
 using Core.Models.Operations;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Test_API_RebbitMQ.Controllers
@@ -18,8 +16,9 @@ namespace Test_API_RebbitMQ.Controllers
             _operationService = operationService;
         }
 
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetFilteredOperationsAsync(int pageSize, int pageIndex)
+        public async Task<IActionResult> GetFilteredOperationsAsync(int pageSize = 15, int pageIndex = 1)
         {
             OperationSummaryResponse response = await _operationService.GetFilteredOperationsAsync(pageSize,pageIndex);
             return Ok(response);

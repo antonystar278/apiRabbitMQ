@@ -24,7 +24,7 @@ namespace Infrastructure.Repositories.Repositories.Base
             return item;
         }
 
-        public async Task<T> GetByIdAsync(Guid id)
+        public async Task<T> GetByIdAsync(int id)
         {
             return await _appDbContext.Set<T>().FindAsync(id);
         }

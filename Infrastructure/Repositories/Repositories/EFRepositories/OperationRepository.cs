@@ -15,11 +15,21 @@ namespace Infrastructure.Repositories.Repositories.EFRepositories
 
         public async Task<OperationSummaryResponse> GetFilteredOperationsAsync(int pageSize, int pageIndex)
         {
-            IQueryable<Operation> operations = _appDbContext.Operations;
+            IQueryable<OperationSummaryDTO> operations = _appDbContext.Operations
+                .Include(x => x.User)
+                .Select(operation => new OperationSummaryDTO
+                {
+                    Id = operation.Id,
+                    Name = operation.Name,
+                    UserName = operation.User.UserName,
+                    CreationDate = operation.CreationDate,
+                    Status = operation.Status,
+                    ExecutionTime = operation.ExecutionTime
+                });
 
             int count = await operations.CountAsync();
 
-            var paginatedOperations = await PaginatedList<Operation>.CreateAsync(operations, pageIndex, pageSize);
+            var paginatedOperations = await PaginatedList<OperationSummaryDTO>.CreateAsync(operations, pageIndex, pageSize);
             var response = new OperationSummaryResponse
             {
                 Operations = paginatedOperations,
