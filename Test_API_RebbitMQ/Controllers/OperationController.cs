@@ -30,7 +30,5 @@ namespace Test_API_RebbitMQ.Controllers
             Operation operation = await _operationService.CreateAsync(request);
             return Ok(operation);
         }
-
-
     }
 }

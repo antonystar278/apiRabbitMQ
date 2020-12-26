@@ -1,6 +1,5 @@
 using Core.Extensions.ConfigureServices;
 using Core.Helpers;
-using Core.Models.Authentication;
 using Infrastructure.ConfigureServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Converters;
+using OperationsMessagingSend.ConfigureServices;
 
 namespace Test_API_RebbitMQ
 {
@@ -34,6 +34,7 @@ namespace Test_API_RebbitMQ
 
             services.Configure<JwtConfigModel>(Configuration.GetSection("JwtConfig"));
             services.ConfigureInfrastructureDependencies(Configuration);
+            services.ConfigureMessagingSendDependencies(Configuration);
             services.ConfigureCoreDependencies();
             services.AddSpaStaticFiles(configuration =>
             {

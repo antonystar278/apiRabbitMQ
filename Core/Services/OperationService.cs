@@ -2,6 +2,7 @@
 using Core.Enums;
 using Core.Interfaces.Core.Services;
 using Core.Interfaces.Infrastructure;
+using Core.Interfaces.Operations.Messaging.Send;
 using Core.Models.Operations;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,13 @@ namespace Core.Services
     public class OperationService : IOperationService
     {
         protected readonly IOperationRepository _operationRepository;
+        private readonly IOperationUpdateSender _operationUpdateSender;
 
-        public OperationService(IOperationRepository operationRepository)
+        public OperationService(IOperationRepository operationRepository,
+            IOperationUpdateSender operationUpdateSender)
         {
             _operationRepository = operationRepository;
+            _operationUpdateSender = operationUpdateSender;
         }
         public async Task<Operation> CreateAsync(OperationCreateRequest request)
         {
@@ -30,7 +34,7 @@ namespace Core.Services
 
             await _operationRepository.CreateAsync(entity);
 
-
+            _operationUpdateSender.SendOperation(entity);
 
             return entity;
         }
