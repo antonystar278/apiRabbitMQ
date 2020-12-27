@@ -1,22 +1,59 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+﻿using Core.Entities;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System;
+using System.Text;
+using System.Threading;
 
 namespace OperationsMessagingReceive
 {
-    public class Program
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            Console.WriteLine("lololololol");
-            CreateHostBuilder(args).Build().Run();
-        }
+            var factory = new ConnectionFactory()
+            {
+                HostName = "localhost",
+                UserName = "user",
+                Password = "password"
+            };
+            using (var connection = factory.CreateConnection())
+            using (var channel = connection.CreateModel())
+            {
+                var queueName = "OperationQueue";
+                channel.QueueDeclare(queueName,
+                                     durable: true,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
+
+                Console.WriteLine(" [*] Waiting for messages.");
+
+                var consumer = new EventingBasicConsumer(channel);
+                consumer.Received += (sender, ea) =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                });
+                    var content = Encoding.UTF8.GetString(ea.Body.ToArray());
+                    var operation = JsonConvert.DeserializeObject<Operation>(content);
+
+                    Console.WriteLine(" [x] Received {0}", operation);
+
+
+                    Thread.Sleep(1000);
+
+                    Console.WriteLine(" [x] Done");
+
+                    channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+                };
+                channel.BasicConsume(queueName,
+                                     autoAck: false,
+                                     consumer: consumer);
+
+                Console.WriteLine(" Press [enter] to exit.");
+                Console.ReadLine();
+            }
+        }
     }
 }

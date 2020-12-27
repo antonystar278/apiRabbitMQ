@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperationsMessagingSend", "TaskHandler\OperationsMessagingSend.csproj", "{3985A4A6-BA17-4D4C-AF88-3441359D9B22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationsMessagingReceive", "OperationsMessagingReceive\OperationsMessagingReceive.csproj", "{5156DC68-3B84-4876-9DE6-D189D8988FD7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationsMessagingReceive", "OperationsMessagingReceive\OperationsMessagingReceive.csproj", "{467F5ABC-C626-4525-8805-45F45054470E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{3985A4A6-BA17-4D4C-AF88-3441359D9B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3985A4A6-BA17-4D4C-AF88-3441359D9B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3985A4A6-BA17-4D4C-AF88-3441359D9B22}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5156DC68-3B84-4876-9DE6-D189D8988FD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5156DC68-3B84-4876-9DE6-D189D8988FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5156DC68-3B84-4876-9DE6-D189D8988FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5156DC68-3B84-4876-9DE6-D189D8988FD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{467F5ABC-C626-4525-8805-45F45054470E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{467F5ABC-C626-4525-8805-45F45054470E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{467F5ABC-C626-4525-8805-45F45054470E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{467F5ABC-C626-4525-8805-45F45054470E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -28,7 +28,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\OperationsMessagingReceive\OperationsMessagingReceive.csproj" />
     <ProjectReference Include="..\TaskHandler\OperationsMessagingSend.csproj" />
   </ItemGroup>
 
