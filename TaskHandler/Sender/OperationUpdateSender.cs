@@ -6,28 +6,25 @@ using Operations.Messaging.Send.Options;
 using RabbitMQ.Client;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Operations.Messaging.Send.Sender
 {
     public class OperationUpdateSender : IOperationUpdateSender
     {
         private readonly string _hostname;
-        private readonly string _password;
         private readonly string _queueName;
-        private readonly string _username;
         private IConnection _connection;
 
         public OperationUpdateSender(IOptions<RabbitMqConfiguration> rabbitMqOptions)
         {
             _queueName = rabbitMqOptions.Value.QueueName;
             _hostname = rabbitMqOptions.Value.Hostname;
-            _username = rabbitMqOptions.Value.UserName;
-            _password = rabbitMqOptions.Value.Password;
 
             CreateConnection();
         }
 
-        public void SendOperation(Operation operation)
+        public async Task SendOperation(Operation operation)
         {
             if (ConnectionExists())
             {
@@ -41,7 +38,8 @@ namespace Operations.Messaging.Send.Sender
                     var properties = channel.CreateBasicProperties();
                     properties.Persistent = true;
 
-                    channel.BasicPublish(exchange: "", routingKey: _queueName, basicProperties: properties, body: body);
+                    await Task.Run(() =>
+                    channel.BasicPublish(exchange: "", routingKey: _queueName, basicProperties: properties, body: body));
                 }
             }
         }
@@ -52,9 +50,7 @@ namespace Operations.Messaging.Send.Sender
             {
                 var factory = new ConnectionFactory
                 {
-                    HostName = _hostname,
-                    UserName = _username,
-                    Password = _password
+                    HostName = _hostname
                 };
                 _connection = factory.CreateConnection();
             }

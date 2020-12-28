@@ -9,7 +9,7 @@ namespace Core.Entities
         public string Name { get; set; }
         public int OperationNumber { get; set; }     
         public OperationStatus Status { get; set; }
-        public DateTime ExecutionTime { get; set; }
+        public TimeSpan ExecutionTime { get; set; } = TimeSpan.Zero;
         public int ApplicationUserId { get; set; }
         public ApplicationUser User { get; set; }
         

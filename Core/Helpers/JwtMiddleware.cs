@@ -57,7 +57,7 @@ namespace Core.Helpers
             }
             catch
             {
-                //throw new AuthorizeException("User wasn't autorize");
+                
             }
         }
     }

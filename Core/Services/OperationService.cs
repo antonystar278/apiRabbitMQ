@@ -16,11 +16,14 @@ namespace Core.Services
         protected readonly IOperationRepository _operationRepository;
         private readonly IOperationUpdateSender _operationUpdateSender;
 
+
         public OperationService(IOperationRepository operationRepository,
-            IOperationUpdateSender operationUpdateSender)
+            IOperationUpdateSender operationUpdateSender
+)
         {
             _operationRepository = operationRepository;
             _operationUpdateSender = operationUpdateSender;
+
         }
         public async Task<Operation> CreateAsync(OperationCreateRequest request)
         {
@@ -34,7 +37,7 @@ namespace Core.Services
 
             await _operationRepository.CreateAsync(entity);
 
-            _operationUpdateSender.SendOperation(entity);
+            await _operationUpdateSender.SendOperation(entity);
 
             return entity;
         }
@@ -45,9 +48,11 @@ namespace Core.Services
             return response;
         }
 
-        public Task<Operation> UpdateAsync(OperationUpdateRequest request)
+        public async Task UpdateAsync(Operation updatedOperation)
         {
-            throw new NotImplementedException();
+            Operation operation = await _operationRepository.GetByIdAsync(updatedOperation.Id);
+            operation.ExecutionTime = updatedOperation.ExecutionTime;
+            await _operationRepository.UpdateAsync(operation);
         }
     }
 }

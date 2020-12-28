@@ -11,7 +11,6 @@ namespace Core.Extensions.ConfigureServices
             services.AddTransient<IOperationService, OperationService>();
             services.AddTransient<IAccountService, AccountService>();
 
-
             return services;
         }
 

@@ -10,6 +10,6 @@ namespace Core.Models.Operations
         public string UserName { get; set; }
         public DateTime CreationDate { get; set; }
         public OperationStatus Status { get; set; }
-        public DateTime ExecutionTime { get; set; }
+        public TimeSpan ExecutionTime { get; set; }
     }
 }

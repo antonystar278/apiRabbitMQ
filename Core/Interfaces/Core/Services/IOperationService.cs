@@ -10,7 +10,7 @@ namespace Core.Interfaces.Core.Services
     public interface IOperationService
     {
         Task<Operation> CreateAsync(OperationCreateRequest request);
-        Task<Operation> UpdateAsync(OperationUpdateRequest request);
+        Task UpdateAsync(Operation operation);
         Task<OperationSummaryResponse> GetFilteredOperationsAsync(int pageSize, int pageIndex);
     }
 }

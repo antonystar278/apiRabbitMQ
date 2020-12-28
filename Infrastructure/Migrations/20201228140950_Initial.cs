@@ -165,7 +165,7 @@ namespace Infrastructure.Migrations
                     Name = table.Column<string>(nullable: true),
                     OperationNumber = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    ExecutionTime = table.Column<DateTime>(nullable: false),
+                    ExecutionTime = table.Column<TimeSpan>(nullable: false),
                     ApplicationUserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
