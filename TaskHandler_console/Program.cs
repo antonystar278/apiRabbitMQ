@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Models.Operations;
 using Core.Services;
 using Infrastructure.AppContext;
 using Infrastructure.Repositories.Repositories.EFRepositories;
@@ -12,7 +13,7 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Text;
 
-namespace TaskHandler_console
+namespace TaskHandler
 {
     class Program
     {
@@ -47,18 +48,18 @@ namespace TaskHandler_console
 
                 var config = new RabbitMqConfiguration { Hostname = "localhost", QueueName = "OperationTimeUpadateQueue" };
                 var options = Options.Create<RabbitMqConfiguration>(config);
-                var senser = new OperationUpdateSender(options);
-                var operationService = new OperationService(repository, senser);
+                var operationUpdateSender = new OperationUpdateSender(options);
+                var operationService = new OperationService(repository, operationUpdateSender);
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
-                var operation = JsonConvert.DeserializeObject<Operation>(content);
+                var operationModel = JsonConvert.DeserializeObject<OperationModel>(content);
 
-                Console.WriteLine($" [x] Received ExecutionTime = {operation.ExecutionTime} and Task = {operation.Name}");
+                Console.WriteLine($" [x] Received ExecutionTime = {operationModel.ExecutionTime} and TaskId = {operationModel.Id}");
 
                 Console.WriteLine(" [x] Done");
 
                 channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
 
-                await operationService.UpdateAsync(operation);
+                await operationService.UpdateAsync(operationModel);
 
             };
 

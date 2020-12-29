@@ -33,8 +33,7 @@ namespace Infrastructure.Repositories.Repositories.Base
         {
             _appDbContext.Entry(modifiedItem).State = EntityState.Modified;
             await _appDbContext.SaveChangesAsync();
-            T item = await GetByIdAsync(modifiedItem.Id);
-            return item;
+            return modifiedItem;
 
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Models.Operations;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -33,9 +34,9 @@ namespace OperationsMessagingReceive
             consumer.Received += async (sender, ea) =>
             {
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
-                var operation = JsonConvert.DeserializeObject<Operation>(content);
+                var operationModel = JsonConvert.DeserializeObject<OperationModel>(content);
 
-                Console.WriteLine(" [x] Received {0}", operation.Name);
+                Console.WriteLine(" [x] Received {0}", operationModel.Id);
 
 
                 var newQueueName = "OperationTimeUpadateQueue";
@@ -45,13 +46,13 @@ namespace OperationsMessagingReceive
                 var randomNumber = GetRandomNumber();
 
                 var operationTime = TimeSpan.FromSeconds(randomNumber);
-                var result = operation.ExecutionTime.Add(operationTime);
-                operation.ExecutionTime = result;
+                var result = operationModel.ExecutionTime.Add(operationTime);
+                operationModel.ExecutionTime = result;
 
                 await Task.Delay(randomNumber * 1000);
-                var json = JsonConvert.SerializeObject(operation);
+                var json = JsonConvert.SerializeObject(operationModel);
                 var body = Encoding.UTF8.GetBytes(json);
-                Console.WriteLine(operation.ExecutionTime);
+                Console.WriteLine(operationModel.ExecutionTime);
 
                 channel.BasicPublish(exchange: "", routingKey: newQueueName, basicProperties: properties, body: body);
 

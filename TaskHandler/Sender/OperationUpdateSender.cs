@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces.Operations.Messaging.Send;
+using Core.Models.Operations;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Operations.Messaging.Send.Options;
@@ -24,7 +25,7 @@ namespace Operations.Messaging.Send.Sender
             CreateConnection();
         }
 
-        public async Task SendOperation(Operation operation)
+        public async Task SendOperation(OperationModel model)
         {
             if (ConnectionExists())
             {
@@ -32,7 +33,7 @@ namespace Operations.Messaging.Send.Sender
                 {
                     channel.QueueDeclare(queue: _queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
 
-                    var json = JsonConvert.SerializeObject(operation);
+                    var json = JsonConvert.SerializeObject(model);
                     var body = Encoding.UTF8.GetBytes(json);
 
                     var properties = channel.CreateBasicProperties();

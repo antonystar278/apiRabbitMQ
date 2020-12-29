@@ -24,10 +24,11 @@ namespace Test_API_RebbitMQ.Controllers
             return Ok(response);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] OperationCreateRequest request)
         {
-            Operation operation = await _operationService.CreateAsync(request);
+            var operation = await _operationService.CreateAsync(request);
             return Ok(operation);
         }
     }
