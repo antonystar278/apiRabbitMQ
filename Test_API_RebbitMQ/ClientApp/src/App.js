@@ -5,18 +5,24 @@ import { Authenticate } from './components/Authenticate';
 import { OperationList } from './components/OperationList';
 import { NewOperation } from './components/NewOperation';
 import { PrivateRoute } from './helpers/PrivateRoute';
+import { StoreContext } from './store/StoreContext';
+import { OperationStore } from './store/OperationStore';
 
 import './custom.css'
+
+const store = OperationStore();
 
 export default class App extends Component {
   static displayName = App.name;
 
-  render () {
+  render() {
     return (
       <Layout>
-        <Route exact path='/' component={Authenticate} />
-        <PrivateRoute path='/NewOperation' component={NewOperation} />
-        <PrivateRoute path='/OperationList' component={OperationList} />
+        <StoreContext.Provider value={store}>
+          <Route exact path='/' component={Authenticate} />
+          <PrivateRoute path='/NewOperation' component={NewOperation} />
+          <PrivateRoute path='/OperationList' component={OperationList} />
+        </StoreContext.Provider>
       </Layout>
     );
   }

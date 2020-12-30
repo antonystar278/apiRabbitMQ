@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Operations.Messaging.Send.Sender
 {
-    public class OperationUpdateSender : IOperationUpdateSender
+    public class OperationCreateCommandSender : IOperationUpdateSender
     {
         private readonly string _hostname;
         private readonly string _queueName;
         private IConnection _connection;
 
-        public OperationUpdateSender(IOptions<RabbitMqConfiguration> rabbitMqOptions)
+        public OperationCreateCommandSender(IOptions<RabbitMqConfiguration> rabbitMqOptions)
         {
             _queueName = rabbitMqOptions.Value.QueueName;
             _hostname = rabbitMqOptions.Value.Hostname;
@@ -27,6 +27,7 @@ namespace Operations.Messaging.Send.Sender
 
         public async Task SendOperation(OperationModel model)
         {
+
             if (ConnectionExists())
             {
                 using (var channel = _connection.CreateModel())

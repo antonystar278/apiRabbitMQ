@@ -26,7 +26,7 @@ namespace Core.Services
             _operationUpdateSender = operationUpdateSender;
 
         }
-        public async Task<OperationCreateResponse> CreateAsync(OperationCreateRequest request)
+        public async Task<OperationCreateResponse> SendCreateAsync(OperationCreateRequest request)
         {
             var entity = new Operation
             {

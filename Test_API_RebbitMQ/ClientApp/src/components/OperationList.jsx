@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { operationService } from '../services/OperationService';
 import { DataGrid } from '@material-ui/data-grid';
+import { observer } from 'mobx-react';
+import { StoreContext } from '../store/StoreContext';
+
 
 const columns = [
   { field: 'id', headerName: 'Id', width: 50, sortable: false },
@@ -12,38 +15,33 @@ const columns = [
 ];
 
 
-export function OperationList() {
-  const[tableState, setTableState] = useState({operations: [], totalCount: 0, page: 1});
-  const size = 15;
+export const OperationList = observer(() => {
+  const store = useContext(StoreContext);
 
   useEffect(() => {
-    operationService.getPaginatedOperations(tableState.page, size).then(res => {
-      setTableState({...res.data, page: 1});
-    });
+    store.getOperationsAsync();
   }, []);
 
   const onPageChange = (p) => {
 
-    if (p.page !== tableState.page) {
-      //setPage(p.page);
-      operationService.getPaginatedOperations(p.page, size).then(res => {
-        setTableState({...res.data, page: p.page});
-      });
+    if (p.page !== store.page) {
+      store.setPage(p.page);
+      store.getOperationsAsync();
     }
   }
 
   return (
     <div style={{ height: 800, width: '100%', minWidth: 1000 }}>
-      <DataGrid rows={tableState.operations}
+      <DataGrid rows={store.operations}
         autoHeight
         columns={columns}
         paginationMode='server'
-        rowCount={tableState.totalCount}
-        page={tableState.page}
+        rowCount={store.totalCount}
+        page={store.page}
         onPageChange={onPageChange}
-        pageSize={size}
+        pageSize={store.size}
       />
     </div>
   );
 
-}
+})

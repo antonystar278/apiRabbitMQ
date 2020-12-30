@@ -28,7 +28,7 @@ namespace Test_API_RebbitMQ.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] OperationCreateRequest request)
         {
-            var operation = await _operationService.CreateAsync(request);
+            var operation = await _operationService.SendCreateAsync(request);
             return Ok(operation);
         }
     }

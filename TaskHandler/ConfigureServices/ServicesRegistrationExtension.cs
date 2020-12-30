@@ -14,7 +14,7 @@ namespace OperationsMessagingSend.ConfigureServices
             services.AddOptions();
 
             services.Configure<RabbitMqConfiguration>(configuration.GetSection("RabbitMq"));
-            services.AddTransient<IOperationUpdateSender, OperationUpdateSender>();
+            services.AddTransient<IOperationUpdateSender, OperationCreateCommandSender>();
 
             return services;
         }

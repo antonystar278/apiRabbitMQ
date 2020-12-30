@@ -19,7 +19,7 @@ namespace OperationsMessagingReceive
             };
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            var queueName = "OperationQueue";
+            var queueName = "InProcessOperationQueue";
             channel.QueueDeclare(queueName,
                                  durable: true,
                                  exclusive: false,
@@ -39,7 +39,7 @@ namespace OperationsMessagingReceive
                 Console.WriteLine(" [x] Received {0}", operationModel.Id);
 
 
-                var newQueueName = "OperationTimeUpadateQueue";
+                var newQueueName = "ComplitedOperationQueue";
                 var properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
                 channel.QueueDeclare(queue: newQueueName, durable: true, exclusive: false, autoDelete: false, arguments: null);

@@ -26,7 +26,7 @@ namespace TaskHandler
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
 
-            var newQueueName = "OperationTimeUpadateQueue";
+            var newQueueName = "ComplitedOperationQueue";
             channel.QueueDeclare(newQueueName,
                                  durable: true,
                                  exclusive: false,
@@ -48,8 +48,10 @@ namespace TaskHandler
 
                 var config = new RabbitMqConfiguration { Hostname = "localhost", QueueName = "OperationTimeUpadateQueue" };
                 var options = Options.Create<RabbitMqConfiguration>(config);
-                var operationUpdateSender = new OperationUpdateSender(options);
+                var operationUpdateSender = new OperationCreateCommandSender(options);
                 var operationService = new OperationService(repository, operationUpdateSender);
+
+
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
                 var operationModel = JsonConvert.DeserializeObject<OperationModel>(content);
 
