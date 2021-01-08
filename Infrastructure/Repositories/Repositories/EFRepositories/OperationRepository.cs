@@ -4,7 +4,9 @@ using Core.Models.Operations;
 using Infrastructure.AppContext;
 using Infrastructure.Repositories.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.Repositories.EFRepositories
@@ -12,6 +14,13 @@ namespace Infrastructure.Repositories.Repositories.EFRepositories
     public class OperationRepository : BaseEfRepository<Operation>, IOperationRepository
     {
         public OperationRepository(AppDbContext appDbContext) : base(appDbContext) { }
+
+        //public async Task<TResult> GetFilteredDataAsync<TEntity, TResult>(int pageSize, int pageIndex,
+        //    Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TResult>> select)
+        //{
+        //    return await _appDbContext.Set<TEntity>().Where(predicate).Select(select);
+        //}
+
 
         public async Task<OperationSummaryResponse> GetFilteredOperationsAsync(int pageSize, int pageIndex)
         {

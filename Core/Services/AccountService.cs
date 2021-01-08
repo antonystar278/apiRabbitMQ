@@ -38,7 +38,7 @@ namespace Core.Services
                 throw new BadRequest($"Wrong password for userName = {model.Username}");
             }
 
-            var token = generateJwtToken(user);
+            var token = GenerateJwtToken(user);
 
             return new AuthenticateResponse(user, token);
         }
@@ -66,12 +66,12 @@ namespace Core.Services
                 throw new BadRequest("The Password must be at least 6 characters long, contain upper case character and have specific symbol.");
             }
 
-            var jwtToken = generateJwtToken(newUser);
+            var jwtToken = GenerateJwtToken(newUser);
 
             return new AuthenticateResponse(newUser, jwtToken);
         }
 
-        private string generateJwtToken(ApplicationUser user)
+        private string GenerateJwtToken(ApplicationUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtconfig.SecretKey);

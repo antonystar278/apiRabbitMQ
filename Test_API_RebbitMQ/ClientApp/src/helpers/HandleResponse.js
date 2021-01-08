@@ -2,7 +2,6 @@ import { authenticationService } from '../services/AuthenticationService';
 
 export function handleResponse(response) {
 
-    console.log(response.data);
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {

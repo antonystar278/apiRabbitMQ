@@ -26,4 +26,4 @@ async function getPaginatedOperations(page, size) {
     };
 
     return await axios.get(`?pageSize=${size}&pageIndex=${page}`, config);
-}
+} 
