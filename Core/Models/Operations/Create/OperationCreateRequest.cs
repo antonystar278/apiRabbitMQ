@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Core.Models.Operations
+namespace Core.Models.Operations.Create
 {
     public class OperationCreateRequest
     {

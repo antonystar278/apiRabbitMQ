@@ -1,12 +1,16 @@
-﻿using Core.Entities;
+﻿using Ardalis.Specification;
+using Ardalis.Specification.EntityFrameworkCore;
+using Core.Entities;
 using Core.Interfaces.Infrastructure;
 using Core.Models.Operations;
 using Infrastructure.AppContext;
 using Infrastructure.Repositories.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.Repositories.EFRepositories
@@ -45,6 +49,20 @@ namespace Infrastructure.Repositories.Repositories.EFRepositories
                 TotalCount = count
             };
             return response;
+        }
+
+        public async Task<IReadOnlyList<Operation>> OperationListAsync(ISpecification<Operation> spec, CancellationToken cancellationToken = default)
+        {
+            var specificationResult = ApplySpecificationWithUser(spec);
+            return await specificationResult.ToListAsync(cancellationToken);
+        }
+
+        private IQueryable<Operation> ApplySpecificationWithUser(ISpecification<Operation> spec)
+        {
+            var evaluator = new SpecificationEvaluator<Operation>();
+            return evaluator.GetQuery(_appDbContext.Set<Operation>()
+                .Include(operation => operation.User)
+                .AsQueryable(), spec);
         }
     }
 }

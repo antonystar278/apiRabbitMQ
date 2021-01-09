@@ -1,5 +1,5 @@
 ﻿using Core.Entities;
-using Core.Models.Operations;
+using Core.Models.Operations.Create;
 
 namespace Core.Extensions.Operations
 {
