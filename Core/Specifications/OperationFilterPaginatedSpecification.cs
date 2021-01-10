@@ -8,7 +8,8 @@ namespace Core.Specifications
         public OperationFilterPaginatedSpecification(int skip, int take)
             : base()
         {
-            Query.Paginate(skip, take);
+            Query.Include(x => x.User);
+            Query.Skip(skip).Take(take);
         }
     }
 }

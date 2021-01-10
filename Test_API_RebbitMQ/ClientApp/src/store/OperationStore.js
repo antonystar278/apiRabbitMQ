@@ -1,8 +1,9 @@
 import { runInAction } from 'mobx';
 import { makeAutoObservable } from "mobx"
-import { operationService } from '../services/OperationService';
+import { OperationService } from '../services/OperationService';
 
 export function OperationStore() {
+    const operationService = new OperationService();
 
     const store = {
         operations: [],
@@ -10,7 +11,7 @@ export function OperationStore() {
         size: 15,
         page: 1,
         getOperationsAsync: async () => {
-            const response = await operationService.getPaginatedOperations(store.page, store.size);
+            const response = await operationService.getFilteredOperations(store.page, store.size);
             runInAction(() => {
                 store.operations = response.data.operations;
                 store.totalCount = response.data.totalCount;

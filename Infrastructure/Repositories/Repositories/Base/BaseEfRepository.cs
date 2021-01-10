@@ -51,7 +51,7 @@ namespace Infrastructure.Repositories.Repositories.Base
             var specificationResult = ApplySpecification(spec);
             return await specificationResult.CountAsync(cancellationToken);
         }
-        private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        private protected IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             var evaluator = new SpecificationEvaluator<T>();
             return evaluator.GetQuery(_appDbContext.Set<T>().AsQueryable(), spec);

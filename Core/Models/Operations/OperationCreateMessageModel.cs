@@ -2,7 +2,7 @@
 
 namespace Core.Models.Operations
 {
-    public class OperationModel
+    public class OperationCreateMessageModel
     {
         public int ApplicationUserId { get; set; }
         public int Id { get; set; }

@@ -6,6 +6,6 @@ namespace Core.Interfaces.Operations.Messaging.Send
 {
     public interface IOperationUpdateSender
     {
-        Task SendOperation(OperationModel model);
+        Task SendOperationToQueue(OperationCreateMessageModel model);
     }
 }

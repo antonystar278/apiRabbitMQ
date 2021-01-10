@@ -49,7 +49,7 @@ namespace OperationHandler
             consumer.Received += async (ch, ea) =>
             {
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
-                var operationModel = JsonConvert.DeserializeObject<OperationModel>(content);
+                var operationModel = JsonConvert.DeserializeObject<OperationCreateMessageModel>(content);
 
                 Console.WriteLine($" [x] Received ExecutionTime = {operationModel.ExecutionTime} and TaskId = {operationModel.Id}");
 

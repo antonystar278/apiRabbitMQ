@@ -9,9 +9,7 @@ using Core.Models.Operations.Create;
 using Core.Models.Operations.ListPaged;
 using Core.Specifications;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,7 +28,7 @@ namespace Core.Services
             _operationUpdateSender = operationUpdateSender;
 
         }
-        public async Task<OperationCreateResponse> SendCreateAsync(OperationCreateRequest request)
+        public async Task<OperationCreateResponse> CreateAsync(OperationCreateRequest request)
         {
             var entity = new Operation
             {
@@ -41,28 +39,23 @@ namespace Core.Services
             };
 
             Operation operation = await _operationRepository.CreateAsync(entity);
+            //await SendOperationAsync(operation);
 
-            var model = new OperationModel
+            return entity.ToDTO();
+        }
+        private async Task SendOperationAsync(Operation operation)
+        {
+            var messageModel = new OperationCreateMessageModel
             {
                 Id = operation.Id,
                 ExecutionTime = operation.ExecutionTime,
                 ApplicationUserId = operation.ApplicationUserId
             };
 
-            await _operationUpdateSender.SendOperation(model);
-
-            OperationCreateResponse response = entity.ToDTO();
-
-            return response;
+            await _operationUpdateSender.SendOperationToQueue(messageModel);
         }
 
-        public async Task<OperationSummaryResponse> GetFilteredOperationsAsync(int pageSize, int pageIndex)
-        {
-            OperationSummaryResponse response = await _operationRepository.GetFilteredOperationsAsync(pageSize, pageIndex);
-            return response;
-        }
-
-        public async Task UpdateAsync(OperationModel operationModel)
+        public async Task UpdateAsync(OperationCreateMessageModel operationModel)
         {
             Operation operation = await _operationRepository.GetByIdAsync(operationModel.Id);
             operation.ExecutionTime = operationModel.ExecutionTime;
@@ -81,7 +74,7 @@ namespace Core.Services
                 skip: request.PageIndex * request.PageSize,
                 take: request.PageSize);
 
-            var operations = await _operationRepository.OperationListAsync(pagedSpec, cancellationToken);
+            var operations = await _operationRepository.ListAsync(pagedSpec, cancellationToken);
 
             response.Operations = operations.Select(operation => new OperationSummaryDTO
             {

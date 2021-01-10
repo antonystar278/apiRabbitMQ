@@ -46,7 +46,7 @@ namespace OperationHandler
             consumer.Received += async (ch, ea) =>
             {
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
-                var operationModel = JsonConvert.DeserializeObject<OperationModel>(content);
+                var operationModel = JsonConvert.DeserializeObject<OperationCreateMessageModel>(content);
                 Console.WriteLine(" [x] Received {0}", operationModel.Id);
 
                 var properties = _channel.CreateBasicProperties();

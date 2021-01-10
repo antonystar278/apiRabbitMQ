@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ButtonGroup, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
-import { operationService } from '../services/OperationService';
+import { OperationService } from '../services/OperationService';
 import { authenticationService } from '../services/AuthenticationService';
 
 
@@ -10,7 +10,7 @@ export function NewOperation (){
   const [name, setName] = useState('');
   let history = useHistory();
   const userId = authenticationService.currentUserValue.data.id;
-  console.log(userId);
+  const operationService = new OperationService();
 
   function onNameChange(e) {
     setName(e.target.value);

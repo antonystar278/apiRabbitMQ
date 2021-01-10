@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Models.Operations.ListPaged;
 using System.Collections.Generic;
 
 namespace Core.Models.Operations

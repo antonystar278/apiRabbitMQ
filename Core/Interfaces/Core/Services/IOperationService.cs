@@ -8,9 +8,8 @@ namespace Core.Interfaces.Core.Services
 {
     public interface IOperationService
     {
-        Task<OperationCreateResponse> SendCreateAsync(OperationCreateRequest request);
-        Task UpdateAsync(OperationModel operationModel);
-        Task<OperationSummaryResponse> GetFilteredOperationsAsync(int pageSize, int pageIndex);
+        Task<OperationCreateResponse> CreateAsync(OperationCreateRequest request);
+        Task UpdateAsync(OperationCreateMessageModel operationModel);
         Task<ListPagedOperationsResponse> GetFilteredDataAsync(ListPagedOperationsRequest request, CancellationToken cancellationToken);
     }
 }

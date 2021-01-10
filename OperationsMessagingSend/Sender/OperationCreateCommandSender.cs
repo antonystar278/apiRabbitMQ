@@ -25,7 +25,7 @@ namespace Operations.Messaging.Send.Sender
             CreateConnection();
         }
 
-        public async Task SendOperation(OperationModel model)
+        public async Task SendOperationToQueue(OperationCreateMessageModel model)
         {
 
             if (ConnectionExists())

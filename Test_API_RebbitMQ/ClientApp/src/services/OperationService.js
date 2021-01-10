@@ -1,29 +1,29 @@
 import Axios from "axios";
-import { authHeader } from '../helpers/AuthHeader';
+import { OperationClient } from '../services/clients/OperationClient';
+import { environment } from '../environments/environment';
 
-export const operationService = {
-    createOperation,
-    getPaginatedOperations
-};
+export class OperationService {
+    constructor() {
+        this.axios = Axios.create({
+            baseURL: environment.baseURL + "/operations",
+            responseType: "json"
+        });
+        this.operationClient = new OperationClient();
+    }
 
-const axios = Axios.create({
-    baseURL: "https://localhost:5001/api/operation",
-    responseType: "json"
-})
+    async createOperation(name, userId) {
+        const config = this.operationClient.getConfig();
+        return await this.axios.post('', { name, userId }, config);
+    }
 
-async function createOperation(name, userId) {
-    const auth = authHeader();
-    const config = {
-        headers: auth
-    };
-    return await axios.post('', { name, userId }, config);
+    async getFilteredOperations(page, size) {
+        const config = this.operationClient.getConfig();
+        const queryString = this.operationClient.getQueryString(page, size);
+    
+        return await this.axios.get(queryString, config);
+    }
 }
 
-async function getPaginatedOperations(page, size) {
-    const auth = authHeader();
-    const config = {
-        headers: auth
-    };
 
-    return await axios.get(`?pageSize=${size}&pageIndex=${page}`, config);
-} 
+
+ 

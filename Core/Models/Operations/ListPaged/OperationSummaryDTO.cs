@@ -1,7 +1,7 @@
 ﻿using Core.Enums;
 using System;
 
-namespace Core.Models.Operations
+namespace Core.Models.Operations.ListPaged
 {
     public class OperationSummaryDTO
     {
