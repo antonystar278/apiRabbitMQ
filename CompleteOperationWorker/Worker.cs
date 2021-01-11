@@ -11,19 +11,19 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OperationHandler
+namespace CompleteOperationWorker
 {
-    public class CompleteOperationWorker: BackgroundService
+    public class Worker : BackgroundService
     {
         private IModel _channel;
         private IConnection _connection;
         private readonly RabbitMqConfiguration _rabbitMqOptions;
         private readonly IOperationService _operationService;
 
-        public CompleteOperationWorker(IConfiguration configuration, IOperationService operationService)
+        public Worker(IConfiguration configuration, IOperationService operationService)
         {
             _operationService = operationService;
-            _rabbitMqOptions = configuration.GetSection("RabbitMq").Get<RabbitMqConfiguration>(); ;
+            _rabbitMqOptions = configuration.GetSection("RabbitMq").Get<RabbitMqConfiguration>();
 
             InitializeRabbitMqListener();
         }
@@ -65,7 +65,6 @@ namespace OperationHandler
 
             return Task.CompletedTask;
         }
-
         public override void Dispose()
         {
             _channel.Close();

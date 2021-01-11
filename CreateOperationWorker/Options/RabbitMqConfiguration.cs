@@ -1,4 +1,4 @@
-﻿namespace OperationHandler.Options
+﻿namespace CreateOperationWorker.Options
 {
     public class RabbitMqConfiguration
     {

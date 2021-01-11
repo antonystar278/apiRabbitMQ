@@ -1,3 +1,4 @@
+using CompleteOperationWorker;
 using Core.Interfaces.Core.Services;
 using Core.Interfaces.Infrastructure;
 using Core.Interfaces.Operations.Messaging.Send;
@@ -14,8 +15,6 @@ namespace OperationHandler
 {
     public class Program
     {
-
-        public IConfiguration Configuration { get; }
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
@@ -27,8 +26,7 @@ namespace OperationHandler
                 {
                     services.AddDbContext<AppDbContext>(options =>
                         options.UseSqlServer(hostContext.Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Singleton);
-                    services.AddHostedService<CreateOperationWorker>();
-                    services.AddHostedService<CompleteOperationWorker>();
+                    services.AddHostedService<Worker>();
 
                     services.AddTransient<IOperationRepository, OperationRepository>();
                     services.AddTransient<IOperationUpdateSender, OperationCreateCommandSender>();

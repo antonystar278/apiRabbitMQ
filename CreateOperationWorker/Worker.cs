@@ -1,8 +1,8 @@
 using Core.Models.Operations;
+using CreateOperationWorker.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using OperationHandler.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
@@ -10,17 +10,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OperationHandler
+namespace CreateOperationWorker
 {
-    public class CreateOperationWorker : BackgroundService
+    public class Worker : BackgroundService
     {
         private IModel _channel;
         private IConnection _connection;
         private readonly RabbitMqConfiguration _rabbitMqOptions;
 
-        public CreateOperationWorker(IConfiguration configuration)
+        public Worker(IConfiguration configuration)
         {
-            _rabbitMqOptions = configuration.GetSection("RabbitMq").Get<RabbitMqConfiguration>(); ;
+            _rabbitMqOptions = configuration.GetSection("RabbitMq").Get<RabbitMqConfiguration>();
 
             InitializeRabbitMqListener();
         }
@@ -66,7 +66,6 @@ namespace OperationHandler
                 _channel.BasicPublish(exchange: "", routingKey: _rabbitMqOptions.ComplitedOperationQueue, basicProperties: properties, body: body);
 
                 Console.WriteLine(" [x] Done");
-
 
                 _channel.BasicAck(ea.DeliveryTag, false);
             };

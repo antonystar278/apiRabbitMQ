@@ -39,7 +39,7 @@ namespace Core.Services
             };
 
             Operation operation = await _operationRepository.CreateAsync(entity);
-            //await SendOperationAsync(operation);
+            await SendOperationAsync(operation);
 
             return entity.ToDTO();
         }
